@@ -6,7 +6,7 @@ module.exports = {
         // BASE64 解码
         data = JSON.parse(Buffer.from(data, "base64").toString("utf-8"));
         try {
-            let { body: res } = await axios.request({
+            let { data: res } = await axios.request({
                 timeout: 10000,
                 url: this.signApi + "/sig56_1",
                 headers: {
@@ -29,7 +29,7 @@ module.exports = {
         data = JSON.parse(Buffer.from(data, "base64").toString("utf-8"));
         method = method.toLowerCase();
         try {
-            let { body: res } = await axios.request({
+            let { data: res } = await axios.request({
                 timeout: 10000,
                 url: this.signApi + "/sig68",
                 headers: {
@@ -48,7 +48,7 @@ module.exports = {
 
     async getSig56_2(data, cookie) {
         try {
-            let { body: res } = await axios.request({
+            let { data: res } = await axios.request({
                 timeout: 10000,
                 url: this.signApi + "/sig56_2",
                 headers: {
@@ -137,7 +137,7 @@ module.exports = {
                     salt: salt,
                     data: this.$.queryStr(postdata) + "&" + this.$.queryStr(queryData),
                 };
-                let { body: nssig } = await axios.request({
+                let { data: nssig } = await axios.request({
                     timeout: 10000,
                     url: this.signApi + "/nssig",
                     headers: {
@@ -163,7 +163,7 @@ module.exports = {
                         },
                     };
                 } else {
-                    this.$.log(`❌ 账号 [${this.index}] 获取 nssig 失败，状态异常`);
+                    this.$.log(`❌ 账号 [${this.index}] 获取 nssig 失败，响应: ${JSON.stringify(nssig)}`);
                     throw new Error("nssig 状态异常");
                 }
             } catch (e) {
@@ -171,7 +171,7 @@ module.exports = {
                 if (retryCount < maxRetries) {
                     const waitTime = Math.floor(Math.random() * (60 - 30 + 1)) + 30; // 30-60 秒随机等待
                     this.$.log(
-                        `🔄 账号 [${this.index}] 获取 nssig 失败，第${retryCount}次重试，等待${waitTime}秒后继续...`
+                        `🔄 账号 [${this.index}] 获取 nssig 失败，第${retryCount}次重试，等待${waitTime}秒后继续... 错误: ${e.message}`
                     );
                     await this.$.wait(waitTime * 1000);
                 } else {
@@ -189,7 +189,7 @@ module.exports = {
 
         while (retryCount < maxRetries) {
             try {
-                let { body: result } = await axios.request({
+                let { data: result } = await axios.request({
                     timeout: 10000,
                     url: this.signApi + "/encsign",
                     headers: {
@@ -203,7 +203,7 @@ module.exports = {
                 if (result && result.data) {
                     return result.data;
                 } else {
-                    this.$.log(`❌ 账号[${this.index}] 获取 encsign 失败，状态异常`);
+                    this.$.log(`❌ 账号[${this.index}] 获取 encsign 失败，响应: ${JSON.stringify(result)}`);
                     throw new Error("encsign 状态异常");
                 }
             } catch (e) {
@@ -211,7 +211,7 @@ module.exports = {
                 if (retryCount < maxRetries) {
                     const waitTime = Math.floor(Math.random() * (60 - 30 + 1)) + 30; // 30-60 秒随机等待
                     this.$.log(
-                        `🔄 账号[${this.index}] 获取 encsign 失败，第${retryCount}次重试，等待${waitTime}秒后继续...`
+                        `🔄 账号[${this.index}] 获取 encsign 失败，第${retryCount}次重试，等待${waitTime}秒后继续... 错误: ${e.message}`
                     );
                     await this.$.wait(waitTime * 1000);
                 } else {
