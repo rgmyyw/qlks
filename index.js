@@ -256,15 +256,19 @@ async function sendDingTalkNotification(title, content) {
 // 测试签名 API
 async function testApi(url) {
     try {
-        const res = await axios.get(url + "/ping", {
+        $.log(`  正在测试: ${url} (GET /)`);
+        const res = await axios.get(url, {
             timeout: 5 * 1000,
             headers: {
                 "User-Agent":
                     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
             },
         });
-        return res.data.status;
+        const statusOk = res.data && res.data.status === true;
+        $.log(`  响应状态: HTTP ${res.status}, status=${res.data?.status}`);
+        return statusOk;
     } catch (e) {
+        $.log(`  请求失败: ${e.message}${e.response ? ` (HTTP ${e.response.status})` : ''}`);
         return false;
     }
 }
