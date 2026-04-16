@@ -158,8 +158,8 @@ module.exports = {
                     return {
                         queryData: queryData,
                         headersData: {
-                            kaw: nssig.data.kaw || "默认值",
-                            kas: nssig.data.kas || "默认值",
+                            kaw: nssig.data.kaw || "",
+                            kas: nssig.data.kas || "",
                         },
                     };
                 } else {
