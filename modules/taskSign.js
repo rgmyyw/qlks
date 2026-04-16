@@ -189,6 +189,8 @@ module.exports = {
 
         while (retryCount < maxRetries) {
             try {
+                // API 期望 data 为 Base64 编码的 JSON
+                const encodedData = Buffer.from(JSON.stringify(data)).toString("base64");
                 let { data: result } = await axios.request({
                     timeout: 10000,
                     url: this.signApi + "/encsign",
@@ -197,7 +199,7 @@ module.exports = {
                         "User-Agent": "Mozilla/5.0",
                     },
                     method: "POST",
-                    data: data,
+                    data: { data: encodedData, kaw: "" },
                 });
 
                 if (result && result.data) {
