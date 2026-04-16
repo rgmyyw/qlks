@@ -1,0 +1,24 @@
+{
+  "name": "qlks",
+  "version": "1.0.0",
+  "description": "快手极速版任务脚本 - 青龙面板订阅版",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "kuaishou",
+    "ksjsb",
+    "qinglong",
+    "青龙"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

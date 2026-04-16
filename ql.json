@@ -1,0 +1,14 @@
+{
+  "name": "快手极速版任务脚本",
+  "version": "1.0.0",
+  "author": "",
+  "description": "快手极速版自动任务脚本",
+  "entry": "index.js",
+  "scripts": {
+    "index.js": {
+      "name": "快手极速版任务",
+      "desc": "执行快手极速版日常任务（看广告、宝箱、搜索等）",
+      "cmd": "node index.js"
+    }
+  }
+}
